@@ -69,7 +69,15 @@
                 , {field: 'title', title: '标题', width: '30%', minWidth: 100}
                 , {field: 'region', width: '15%', title: '区域', sort: true}
                 , {field: 'area', width: '15%', title: '面积', sort: true}
-                , {field: 'price', width: '15%', title: '价格', sort: true}
+                , {
+                    field: 'price', width: '15%', title: '价格', sort: true, templet: function (d) {
+                        if (d.price == '0') {
+                            return '面议'
+                        } else {
+                            return d.price
+                        }
+                    }
+                }
                 , {field: 'tel', width: '20%', title: '联系方式', sort: true}
                 // , {field: 'href', title: '链接', width: '30%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
             ]]
@@ -111,13 +119,10 @@
             });
 
     });
-
-
 </script>
 
 <script type="text/html" id="xuhao">
     {{d.LAY_TABLE_INDEX+1}}
 </script>
-
 </body>
 </html>
