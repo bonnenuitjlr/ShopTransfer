@@ -12,93 +12,101 @@
         <result column="time" property="time" jdbcType="VARCHAR"/>
         <result column="grabtime" property="grabtime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    
+
     <sql id="Base_Column_List">
         id, title, href, region, area, type, price, time, grabtime
     </sql>
-    
-	
-	<select id="getConditionMessage" resultMap="BaseResultMap" parameterType="com.xinyu.ShopTransfer.vo.ShopVo">
-	    select 
-	    <include refid="Base_Column_List" />
-	    from shoptransfer where 1=1
-        <if test="title != null" >
-        and title = #{title}
+
+
+    <select id="getConditionMessage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shoptransfer where 1=1
+        <if test="title != null and title != ''">
+            and title like "%${title}%"
         </if>
-        <if test="href != null" >
-        and href = #{href}
+        <if test="href != null">
+            and href = #{href}
         </if>
-        <if test="region != null" >
-        and region = #{region}
+        <if test="region != null and region != ''">
+            and region = #{region}
         </if>
-        <if test="areaS != null and areaE != null" >
-        and area &gt;= #{areaS}
-        and area &lt;= #{areaE}
+        <if test="areaS != null">
+            and area &gt;= #{areaS}
         </if>
-        <if test="type != null" >
-        and type = #{type}
+        <if test="areaE != null">
+            and area &lt;= #{areaE}
         </if>
-        <if test="priceS != null and priceE != null" >
-        and price &gt;= #{priceS}
-        and price &lt;= #{priceE}
+        <if test="type != null">
+            and type = #{type}
         </if>
-        <if test="timeS != null and timeE != null" >
-        and time &gt;= #{timeS}
-        and time &lt;= #{timeE}
+        <if test="priceS != null">
+            and price &gt;= #{priceS}
         </if>
-        <if test="grabtimeS != null and grabtimeE != null" >
-        and grabtime &gt;= #{grabtimeS}
-        and grabtime &lt;= #{grabtimeE}
+        <if test="priceE != null">
+            and price &lt;= #{priceE}
         </if>
-  	</select>
-  	
-  	<!-- 既传入对象又传入参数，就不指定传入类型 -->
-  	<select id="getPageConditionMessage" resultMap="BaseResultMap">
-	    select 
-	    <include refid="Base_Column_List" />
-	    from shoptransfer where 1=1
-        <if test="shopVo.title != null" >
-        and title = #{shopVo.title}
+        <if test="timeS != null and timeE != null">
+            and time &gt;= #{timeS}
+            and time &lt;= #{timeE}
         </if>
-        <if test="shopVo.href != null" >
-        and href = #{shopVo.href}
+        <if test="grabtimeS != null and grabtimeE != null">
+            and grabtime &gt;= #{grabtimeS}
+            and grabtime &lt;= #{grabtimeE}
         </if>
-        <if test="shopVo.region != null" >
-        and region = #{shopVo.region}
+    </select>
+
+    <!-- 既传入对象又传入参数，就不指定传入类型 -->
+    <select id="getPageConditionMessage" resultMap="BaseResultMap" parameterType="com.xinyu.ShopTransfer.vo.ShopVo">
+        select
+        <include refid="Base_Column_List"/>
+        from shoptransfer where 1=1
+        <if test="shopVo.title != null and shopVo.title != ''">
+            and title like "%${shopVo.title}%"
         </if>
-        <if test="shopVo.areaS != null and shopVo.areaE != null" >
-        and area &gt;= #{shopVo.areaS}
-        and area &lt;= #{shopVo.areaE}
+        <if test="shopVo.href != null">
+            and href = #{shopVo.href}
         </if>
-        <if test="shopVo.type != null" >
-        and type = #{shopVo.type}
+        <if test="shopVo.region != null and shopVo.region != ''">
+            and region = #{shopVo.region}
         </if>
-        <if test="shopVo.priceS != null and shopVo.priceE != null" >
-        and price &gt;= #{shopVo.priceS}
-        and price &lt;= #{shopVo.priceE}
+        <if test="shopVo.areaS != null">
+            and area &gt;= #{shopVo.areaS}
         </if>
-        <if test="shopVo.timeS != null and shopVo.timeE != null" >
-        and time &gt;= #{shopVo.timeS}
-        and time &lt;= #{shopVo.timeE}
+        <if test="shopVo.areaE != null">
+            and area &lt;= #{shopVo.areaE}
         </if>
-        <if test="shopVo.grabtimeS != null and shopVo.grabtimeE != null" >
-        and grabtime &gt;= #{shopVo.grabtimeS}
-        and grabtime &lt;= #{shopVo.grabtimeE}
+        <if test="shopVo.type != null">
+            and type = #{shopVo.type}
+        </if>
+        <if test="shopVo.priceS != null">
+            and price &gt;= #{shopVo.priceS}
+        </if>
+        <if test="shopVo.priceE != null">
+            and price &lt;= #{shopVo.priceE}
+        </if>
+        <if test="shopVo.timeS != null and shopVo.timeE != null">
+            and time &gt;= #{shopVo.timeS}
+            and time &lt;= #{shopVo.timeE}
+        </if>
+        <if test="shopVo.grabtimeS != null and shopVo.grabtimeE != null">
+            and grabtime &gt;= #{shopVo.grabtimeS}
+            and grabtime &lt;= #{shopVo.grabtimeE}
         </if>
         limit #{startLine},#{limit}
-  	</select>
-  	
-  	<select id="getConditionMessage1" resultMap="BaseResultMap" parameterType="Integer">
-	    select 
-	    <include refid="Base_Column_List" />
-	    from shoptransfer where 1=1
+    </select>
+
+    <select id="getConditionMessage1" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from shoptransfer where 1=1
         limit #{startLine},#{limit}
-  	</select>
-  	
-  	<select id="getAllMessage1" resultMap="BaseResultMap">
-	    select 
-	    <include refid="Base_Column_List" />
-	    from shoptransfer where 1=1
-  	</select>
-    
+    </select>
+
+    <select id="getAllMessage1" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shoptransfer where 1=1
+    </select>
+
 </mapper>
